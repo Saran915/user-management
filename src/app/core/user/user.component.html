@@ -1,68 +1,8 @@
 <div class="flex justify-between mb-3">
     <p class="text-bold">User</p>
-    <button class="btn btn-sm btn-outline btn-info flex gap-2" (click)="openForm('create', true)">
+    <button class="btn btn-sm btn-outline btn-info flex gap-2" (click)="onAddClick()">
         <img src="add.svg" height="15" width="15" /> <span class="text-black">Add</span>
     </button>
 </div>
 <app-custom-table [columns]="tableColumn" [rowDatas]="userList" (actionEmitter)="handleTableAction($event)">
 </app-custom-table>
-
-
-<dialog #user_form_modal id="user_form_modal" class="modal {{isModalOpen ? 'modal-open':''}}">
-    <div class="modal-box">
-        <div class="font-bold">
-            User Form
-        </div>
-        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" (click)="isModalOpen=false">✕</button>
-        <form [formGroup]="userForm">
-            <div class="grid grid-cols-2 gap-4">
-                <label class="form-control w-full max-w-xs">
-                    <div class="label">First Name</div>
-                    <input type="text" placeholder="First Name" formControlName="firstName"
-                        class="input input-bordered {{isFormFieldInvalid('firstName') ? 'input-error':''}} input-sm w-full" />
-                </label>
-                <label class="form-control w-full max-w-xs">
-                    <div class="label">Last Name</div>
-                    <input type="text" placeholder="last Name" formControlName="lastName"
-                        class="input input-bordered {{isFormFieldInvalid('lastName') ? 'input-error':''}} input-sm w-full" />
-                </label>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <label class="form-control w-full max-w-xs">
-                    <div class="label">User Name</div>
-                    <input type="text" placeholder="User Name" formControlName="userName"
-                        class="input input-bordered {{isFormFieldInvalid('userName') ? 'input-error':''}} input-sm w-full" />
-                </label>
-                <label class="form-control w-full max-w-xs">
-                    <div class="label">Is Admin</div>
-                    <input type="checkbox" class="toggle toggle-success" formControlName="isAdmin" checked="checked" />
-                </label>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <label class="form-control w-full max-w-xs">
-                    <div class="label">Department</div>
-                    <select
-                        class="select select-bordered {{isFormFieldInvalid('department') ? 'select-error':''}} select-sm w-full"
-                        formControlName="department">
-                        <option value="" disabled selected>Select</option>
-                        @for (item of departmentList; track item) {
-                        <option [value]="item">{{item}}</option>
-                        }
-                    </select>
-                </label>
-            </div>
-        </form>
-        <div class="modal-action">
-            @if(formType!=='view'){
-            <button class="btn btn-sm btn-outline btn-success" (click)="onFormSubmit()">
-                {{formType==='create' ? 'Save' : 'Update'}}
-            </button>
-            <button *ngIf="formType!=='edit'" class="btn btn-sm btn-outline btn-error" (click)="userForm.reset()">
-                Reset
-            </button>
-            }@else {
-            <button class="btn btn-sm btn-outline" (click)="isModalOpen=false">Close</button>
-            }
-        </div>
-    </div>
-</dialog>

@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "userName": "khadka_ajaya",
+      "firstName": "Ajaya1",
+      "lastName": "Khadka",
+      "isAdmin": true,
+      "department": "Management"
+    }
+  ]
+}
