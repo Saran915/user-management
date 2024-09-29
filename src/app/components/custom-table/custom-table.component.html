@@ -1,0 +1,69 @@
+<div class="overflow-x-auto">
+    <div class="flex justify-end py-3 px-1">
+        <label class="input input-sm input-bordered flex items-center gap-2 w-1/2">
+            <input type="text" class="grow" placeholder="Search" (keyup)="filterTableData($event)" />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
+                <path fill-rule="evenodd"
+                    d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                    clip-rule="evenodd" />
+            </svg>
+        </label>
+    </div>
+    <table class="table border border-slate-100">
+        <!-- head -->
+        <thead>
+            <!-- header -->
+            <tr>
+                <th>S.N.</th>
+                @for (col of columns; track col){
+                <th>{{col.label}}</th>
+                }
+                @if (showAction) {
+                <td class="flex justify-end">Action</td>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <!-- rows -->
+            @if (rowDatas.length) {
+            @for (row of rowDatas; track row; let idx = $index){
+            <tr class="even:bg-gray-100">
+                <td>{{idx + 1}}</td>
+                @for (col of columns; track col){
+                @if(col?.Cell){
+                <td [innerHTML]="col.Cell(row)"></td>
+                } @else {
+                <td>{{row[col['key']]}}</td>
+                }
+                }
+                @if (showAction) {
+                <td class="flex flex justify-end gap-2">
+                    <button class="btn btn-xs btn-outline btn-info" (click)="onActionBtnClick(row,'edit')">
+                        <img src="edit.svg" height="15" width="15" />
+                    </button>
+                    <button class="btn btn-xs btn-outline btn-info" (click)="onActionBtnClick(row,'view')">
+                        <img src="view.svg" height="15" width="15" />
+                    </button>
+                    <button class="btn btn-xs btn-outline btn-info" (click)="onActionBtnClick(row,'delete')">
+                        <img src="delete.svg" height="15" width="15" />
+                    </button>
+                </td>
+                }
+            </tr>
+            }
+            } @else{
+            <tr>
+                <td colspan="10">
+                    <div class="flex justify-center">
+                        <div class="flex flex-col items-center gap-2">
+                            <img class="" src="no-file.svg" alt="" height="100" width="100" />
+                            <div class="">No Data Available</div>
+                            <div class="">Any Available Data Show Here.</div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
