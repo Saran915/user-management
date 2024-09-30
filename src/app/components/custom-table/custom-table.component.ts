@@ -8,11 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { debounceTime, distinctUntilChanged, map, Subject } from 'rxjs';
-
-interface IActionBtn {
-  value: any;
-  actionType: string;
-}
+import { IActionBtn } from '../interface/table.interface';
 
 @Component({
   selector: 'app-custom-table',

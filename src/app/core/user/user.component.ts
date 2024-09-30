@@ -1,18 +1,25 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { map } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
 import { CustomTableComponent } from '../../components/custom-table/custom-table.component';
-import { AppService } from '../../services/app.service';
+import { IUser } from '../../model/user.interface';
+import { getUserList } from '../../store/selectors/user.selector';
+import {
+  deleteUserActions,
+  loadUserActions,
+} from '../../store/actions/user.action';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [CustomTableComponent],
+  imports: [CommonModule, CustomTableComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
 })
 export class UserComponent implements OnInit {
-  #appService: AppService = inject(AppService);
+  #store: Store = inject(Store);
   #router: Router = inject(Router);
 
   public tableColumn: Array<any> = [
@@ -47,7 +54,7 @@ export class UserComponent implements OnInit {
     },
   ];
 
-  public userList: Array<any> = [];
+  public userList$: Observable<IUser[] | undefined> = of([]);
 
   ngOnInit(): void {
     this.fetchData();
@@ -66,26 +73,15 @@ export class UserComponent implements OnInit {
         this.#router.navigate(['/user/details', val?.value?.id]);
         return;
       case 'delete':
-        this.#appService
-          .deleteUserBy(val?.value?.id)
-          .pipe(
-            map(() => {
-              this.fetchData();
-            })
-          )
-          .subscribe();
+        this.#store.dispatch(
+          deleteUserActions.deleteUser({ id: val?.value?.id })
+        );
         return;
     }
   }
 
   private fetchData(): void {
-    this.#appService
-      .getUserList()
-      .pipe(
-        map((res) => {
-          this.userList = res;
-        })
-      )
-      .subscribe();
+    this.#store.dispatch(loadUserActions.loadUsers());
+    this.userList$ = this.#store.select(getUserList);
   }
 }

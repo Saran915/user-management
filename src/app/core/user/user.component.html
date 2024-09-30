@@ -4,5 +4,6 @@
         <img src="add.svg" height="15" width="15" /> <span class="text-black">Add</span>
     </button>
 </div>
-<app-custom-table [columns]="tableColumn" [rowDatas]="userList" (actionEmitter)="handleTableAction($event)">
+<app-custom-table [columns]="tableColumn" [rowDatas]="(userList$ | async) ?? []"
+    (actionEmitter)="handleTableAction($event)">
 </app-custom-table>

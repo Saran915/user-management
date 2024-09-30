@@ -14,17 +14,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
-import { AppService } from '../../../services/app.service';
-
-interface IUserForm {
-  id: FormControl<number | null>;
-  userName: FormControl<string>;
-  firstName: FormControl<string>;
-  lastName: FormControl<string>;
-  isAdmin: FormControl<boolean>;
-  department: FormControl<string>;
-}
+import { IUserForm } from '../../../model/user.interface';
+import {
+  addUserActions,
+  loadUserByIdActions,
+  updateUserActions,
+} from '../../../store/actions/user.action';
+import { getUserDetail } from '../../../store/selectors/user.selector';
 
 @Component({
   selector: 'app-user-form',
@@ -34,12 +32,12 @@ interface IUserForm {
   styleUrl: './user-form.component.scss',
 })
 export class UserFormComponent implements OnInit {
-  #appService: AppService = inject(AppService);
+  #store: Store = inject(Store);
   #router: Router = inject(Router);
   #activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+
   public departmentList = ['Marketing', 'Management', 'Maintenance'];
   public pageName: WritableSignal<string> = signal('create');
-  public userId: WritableSignal<string | number> = signal('');
 
   public userForm = new FormGroup<IUserForm>({
     id: new FormControl(null),
@@ -67,7 +65,9 @@ export class UserFormComponent implements OnInit {
       .pipe(
         map((res) => {
           if (Object?.values(res).length) {
-            this.userId.set(res?.['userId']);
+            return this.#store.dispatch(
+              loadUserByIdActions.loadUserById({ id: res['userId'] })
+            );
           }
         })
       )
@@ -95,23 +95,11 @@ export class UserFormComponent implements OnInit {
     if (this.userForm.valid) {
       const formObj = this.userForm.getRawValue();
       if (!formObj['id']) {
-        this.#appService
-          .createUser({ ...formObj, id: Date.now() })
-          .pipe(
-            map(() => {
-              this.#router.navigate(['/user']);
-            })
-          )
-          .subscribe();
+        this.#store.dispatch(
+          addUserActions.addUser({ data: { ...formObj, id: Date.now() } })
+        );
       } else {
-        this.#appService
-          .updateUser(formObj)
-          .pipe(
-            map(() => {
-              this.#router.navigate(['/user']);
-            })
-          )
-          .subscribe();
+        this.#store.dispatch(updateUserActions.updateUser({ data: formObj }));
       }
     }
   }
@@ -121,16 +109,14 @@ export class UserFormComponent implements OnInit {
   }
 
   private fetchDetail(): void {
-    if (this.userId()) {
-      this.#appService
-        .getUserBy(this.userId())
-        .pipe(
-          map((res) => {
-            this.userForm.patchValue({ ...res });
-          })
-        )
-        .subscribe();
-    }
+    this.#store
+      .select(getUserDetail)
+      .pipe(
+        map((res) => {
+          this.userForm.patchValue({ ...res });
+        })
+      )
+      .subscribe();
   }
 
   private getPageName(): void {
