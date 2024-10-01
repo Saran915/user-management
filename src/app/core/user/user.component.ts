@@ -10,6 +10,7 @@ import {
   deleteUserActions,
   loadUserActions,
 } from '../../store/actions/user.action';
+import { IActionBtn, IColumn } from '../../components/interface/table.interface';
 
 @Component({
   selector: 'app-user',
@@ -22,7 +23,7 @@ export class UserComponent implements OnInit {
   #store: Store = inject(Store);
   #router: Router = inject(Router);
 
-  public tableColumn: Array<any> = [
+  public tableColumn: IColumn<IUser>[] = [
     {
       label: 'ID',
       key: 'id',
@@ -42,7 +43,7 @@ export class UserComponent implements OnInit {
     {
       label: 'Is Admin',
       key: 'isAdmin',
-      Cell: (row: any) => {
+      Cell: (row: IUser) => {
         return `<div class='${row?.isAdmin ? 'badge badge-warning' : ''}'>${
           row?.isAdmin ? 'Yes' : 'No'
         }</div>`;
@@ -64,7 +65,7 @@ export class UserComponent implements OnInit {
     this.#router.navigate(['/user/create']);
   }
 
-  public handleTableAction(val: any): void {
+  public handleTableAction(val: IActionBtn<IUser>): void {
     switch (val.actionType) {
       case 'edit':
         this.#router.navigate(['/user/edit', val?.value?.id]);
@@ -74,7 +75,7 @@ export class UserComponent implements OnInit {
         return;
       case 'delete':
         this.#store.dispatch(
-          deleteUserActions.deleteUser({ id: val?.value?.id })
+          deleteUserActions.deleteUser({ id: Number(val?.value?.id ||  '') })
         );
         return;
     }

@@ -42,10 +42,10 @@ export const userReducer = createReducer(
       error: '',
     };
   }),
-  on(deleteUserActions.deleteUserCompleted, (state, action) => {
+  on(deleteUserActions.deleteUserCompleted, (state) => {
     return {
       ...state,
-      data: [],
+      data: undefined,
       getDetail: undefined,
       error: '',
     };

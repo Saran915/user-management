@@ -7,14 +7,6 @@
       "lastName": "Khadka",
       "isAdmin": true,
       "department": "Management"
-    },
-    {
-      "id": 1727723448659,
-      "userName": "Test_user",
-      "firstName": "User",
-      "lastName": "Test",
-      "isAdmin": false,
-      "department": "Maintenance"
     }
   ]
 }

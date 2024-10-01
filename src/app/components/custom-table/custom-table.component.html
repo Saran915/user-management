@@ -31,21 +31,21 @@
                 <td>{{idx + 1}}</td>
                 @for (col of columns; track col){
                 @if(col?.Cell){
-                <td [innerHTML]="col.Cell(row)"></td>
+                <td [innerHTML]="col?.Cell(row)"></td>
                 } @else {
-                <td>{{row[col['key']]}}</td>
+                <td >{{row | tableCell: col }}</td>
                 }
                 }
                 @if (showAction) {
                 <td class="flex flex justify-end gap-2">
                     <button class="btn btn-xs btn-outline btn-info" (click)="onActionBtnClick(row,'edit')">
-                        <img src="edit.svg" height="15" width="15" />
+                        <img src="edit.svg" height="15" width="15" alt="edit" />
                     </button>
                     <button class="btn btn-xs btn-outline btn-info" (click)="onActionBtnClick(row,'view')">
-                        <img src="view.svg" height="15" width="15" />
+                        <img src="view.svg" height="15" width="15" alt="view"/>
                     </button>
                     <button class="btn btn-xs btn-outline btn-info" (click)="onActionBtnClick(row,'delete')">
-                        <img src="delete.svg" height="15" width="15" />
+                        <img src="delete.svg" height="15" width="15" alt="delete" />
                     </button>
                 </td>
                 }

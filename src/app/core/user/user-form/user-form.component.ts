@@ -80,7 +80,7 @@ export class UserFormComponent implements OnInit {
   }
 
   isFormFieldInvalid(formControlName: string): boolean {
-    const val: boolean = false;
+    const val = false;
     if (
       this.userForm.get(formControlName)?.dirty ||
       this.userForm.get(formControlName)?.touched
