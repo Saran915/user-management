@@ -7,38 +7,6 @@
       "lastName": "Khadka",
       "isAdmin": true,
       "department": "Management"
-    },
-    {
-      "id": "1727892388037",
-      "userName": "john_doe",
-      "firstName": "John",
-      "lastName": "Doe",
-      "isAdmin": true,
-      "department": "Marketing"
-    },
-    {
-      "id": "1727892491889",
-      "userName": "john_doe",
-      "firstName": "John",
-      "lastName": "Doe",
-      "isAdmin": true,
-      "department": "Marketing"
-    },
-    {
-      "id": 1727894231752,
-      "userName": "john_doe",
-      "firstName": "John",
-      "lastName": "Doe",
-      "isAdmin": true,
-      "department": "Marketing"
-    },
-    {
-      "id": 1727894236852,
-      "userName": "john_doe",
-      "firstName": "John",
-      "lastName": "Doe",
-      "isAdmin": true,
-      "department": "Marketing"
     }
   ]
 }
