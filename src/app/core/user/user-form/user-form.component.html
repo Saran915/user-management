@@ -6,31 +6,32 @@
         <div class=" grid grid-cols-3 gap-1">
             <label class="form-control w-full max-w-xs">
                 <div class="label">User Name</div>
-                <input type="text" placeholder="User Name" formControlName="userName"
+                <input type="text" placeholder="User Name" formControlName="userName" id="userName"
                     class="input input-bordered {{isFormFieldInvalid('userName') ? 'input-error':''}} input-sm w-full" />
             </label>
             <label class="form-control w-full max-w-xs">
                 <div class="label">First Name</div>
-                <input type="text" placeholder="First Name" formControlName="firstName"
+                <input type="text" placeholder="First Name" formControlName="firstName" id="firstName"
                     class="input input-bordered {{isFormFieldInvalid('firstName') ? 'input-error':''}} input-sm w-full" />
             </label>
             <label class="form-control w-full max-w-xs">
                 <div class="label">Last Name</div>
-                <input type="text" placeholder="last Name" formControlName="lastName"
+                <input type="text" placeholder="last Name" formControlName="lastName" id="lastName"
                     class="input input-bordered {{isFormFieldInvalid('lastName') ? 'input-error':''}} input-sm w-full" />
             </label>
         </div>
         <div class="grid grid-cols-3 gap-1">
             <label class="form-control w-full max-w-xs">
                 <div class="label">Is Admin</div>
-                <input type="checkbox" class="toggle toggle-success" formControlName="isAdmin" checked="checked" />
+                <input type="checkbox" class="toggle toggle-success" formControlName="isAdmin" id="isAdmin"
+                    checked="checked" />
             </label>
 
             <label class="form-control w-full max-w-xs">
                 <div class="label">Department</div>
                 <select
                     class="select select-bordered {{isFormFieldInvalid('department') ? 'select-error':''}} select-sm w-full"
-                    formControlName="department">
+                    formControlName="department" id="department">
                     <option value="" disabled selected>Select</option>
                     @for (item of departmentList; track item) {
                     <option [value]="item">{{item}}</option>
@@ -40,10 +41,11 @@
         </div>
         <div class="card-actions justify-end">
             @if(pageName() !== 'view'){
-            <button class="btn btn-sm btn-outline btn-success" (click)="onFormSubmit()">
+            <button type="button" class="btn btn-sm btn-outline btn-success" (click)="onFormSubmit()">
                 {{pageName()==='create' ? 'Save' : 'Update'}}
             </button>
-            <button *ngIf="pageName() === 'create'" class="btn btn-sm btn-outline btn-error" (click)="userForm.reset()">
+            <button type="button" *ngIf="pageName() === 'create'" class="btn btn-sm btn-outline btn-error"
+                (click)="userForm.reset()">
                 Reset
             </button>
             }

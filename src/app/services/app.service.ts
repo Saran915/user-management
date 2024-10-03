@@ -22,11 +22,11 @@ export class AppService {
     return this.#http.get<IUser[]>(this.Base_URL);
   }
 
-  getUserBy(id: number | string): Observable<IUser> {
+  getUserBy(id: number | string | null): Observable<IUser> {
     return this.#http.get<IUser>(`${this.Base_URL}/${id}`);
   }
 
-  deleteUserBy(id: number): Observable<IUser> {
+  deleteUserBy(id: number | null): Observable<IUser> {
     return this.#http.delete<IUser>(`${this.Base_URL}/${id}`);
   }
 }

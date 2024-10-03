@@ -58,6 +58,6 @@ export class CustomTableComponent<T> implements OnInit, OnChanges {
   }
 
   public filterTableData(event: Event): void {
-    this.filterValue$.next((event?.target  as HTMLInputElement)?.value);
+    this.filterValue$.next((event?.target as HTMLInputElement)?.value);
   }
 }
